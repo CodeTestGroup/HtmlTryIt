@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript HTML TryIt Editor</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100vh;
+  }
+  .editor-container {
+    flex: 1;
+    overflow: hidden;
+  }
+  #code-editor {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: none;
+    padding: 10px;
+    font-family: monospace;
+  }
+  #output-container {
+    flex: 1;
+    border-top: 1px solid #ccc;
+    overflow: auto;
+    padding: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>JavaScript HTML Try-It Editor</h1>
+  <div class="editor-container">
+    <textarea id="code-editor" placeholder="Write your HTML and JavaScript code here..."></textarea>
+  </div>
+  <div id="output-container">
+    Output will appear here
+  </div>
+</div>
+<script>
+  const codeEditor = document.getElementById('code-editor');
+  const outputContainer = document.getElementById('output-container');
+
+  codeEditor.addEventListener('input', updateOutput);
+
+  function updateOutput() {
+    const code = codeEditor.value;
+    outputContainer.innerHTML = '';
+    const iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    outputContainer.appendChild(iframe);
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(code);
+    iframeDoc.close();
+  }
+
+  updateOutput(); // Initial update
+</script>
+</body>
+</html>
